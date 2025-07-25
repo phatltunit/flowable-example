@@ -8,14 +8,18 @@
     <exclusiveGateway id="decision"></exclusiveGateway>
     <userTask id="holidayApprovedTask" name="Holiday approved" flowable:formFieldValidation="true"></userTask>
     <endEvent id="approveEnd"></endEvent>
-    <endEvent id="rejectEnd"></endEvent>
-    <sequenceFlow id="sequenceFlow-de75c78a-09e4-4bfa-8bb8-46a980a5de15" sourceRef="decision" targetRef="rejectEnd">
+    <sequenceFlow id="sequenceFlow-de75c78a-09e4-4bfa-8bb8-46a980a5de15" sourceRef="decision" targetRef="someThing">
       <conditionExpression xsi:type="tFormalExpression"><![CDATA[${!approved}]]></conditionExpression>
     </sequenceFlow>
     <sequenceFlow id="sequenceFlow-943e5c4c-fcd5-406e-9345-f928cbe92710" sourceRef="holidayApprovedTask" targetRef="approveEnd"></sequenceFlow>
     <sequenceFlow id="sequenceFlow-b2a005e6-4dce-4764-90fa-0906802d3dac" sourceRef="decision" targetRef="holidayApprovedTask">
       <conditionExpression xsi:type="tFormalExpression"><![CDATA[${approved}]]></conditionExpression>
     </sequenceFlow>
+    <serviceTask id="someThing" name="Service task" flowable:class="vn.com.phat.delegation.SomeThing"></serviceTask>
+    <userTask id="holidayRejectedTask" name="Holiday Rejected" flowable:formFieldValidation="true"></userTask>
+    <sequenceFlow id="sid-1850CA14-2616-433D-A790-D58DD96939AE" sourceRef="someThing" targetRef="holidayRejectedTask"></sequenceFlow>
+    <endEvent id="sid-A6F6A78F-C106-4A98-9ED3-0F836F5C0541"></endEvent>
+    <sequenceFlow id="sid-26AFD2D7-A319-4116-BA25-062C3A313B1A" sourceRef="holidayRejectedTask" targetRef="sid-A6F6A78F-C106-4A98-9ED3-0F836F5C0541"></sequenceFlow>
   </process>
   <bpmndi:BPMNDiagram id="BPMNDiagram_holidayRequest">
     <bpmndi:BPMNPlane bpmnElement="holidayRequest" id="BPMNPlane_holidayRequest">
@@ -34,8 +38,14 @@
       <bpmndi:BPMNShape bpmnElement="approveEnd" id="BPMNShape_approveEnd">
         <omgdc:Bounds height="28.0" width="28.0" x="620.0" y="173.0"></omgdc:Bounds>
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape bpmnElement="rejectEnd" id="BPMNShape_rejectEnd">
-        <omgdc:Bounds height="28.0" width="28.0" x="505.0" y="15.0"></omgdc:Bounds>
+      <bpmndi:BPMNShape bpmnElement="someThing" id="BPMNShape_someThing">
+        <omgdc:Bounds height="60.00000029802322" width="81.0000002682209" x="522.1999731630091" y="0.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="holidayRejectedTask" id="BPMNShape_holidayRejectedTask">
+        <omgdc:Bounds height="54.000000387430184" width="70.00000043213367" x="674.9999798834328" y="0.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="sid-A6F6A78F-C106-4A98-9ED3-0F836F5C0541" id="BPMNShape_sid-A6F6A78F-C106-4A98-9ED3-0F836F5C0541">
+        <omgdc:Bounds height="28.0" width="28.0" x="789.99999037385" y="16.00000010430813"></omgdc:Bounds>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge bpmnElement="sequenceFlow-1fe0d496-1b16-4021-ba46-3017042d097e" id="BPMNEdge_sequenceFlow-1fe0d496-1b16-4021-ba46-3017042d097e">
         <omgdi:waypoint x="179.9499999999547" y="109.99999941691108"></omgdi:waypoint>
@@ -45,7 +55,7 @@
         <omgdi:waypoint x="264.92310985721366" y="109.99999865889549"></omgdi:waypoint>
         <omgdi:waypoint x="282.0" y="109.99999865889549"></omgdi:waypoint>
         <omgdi:waypoint x="282.0" y="30.0"></omgdi:waypoint>
-        <omgdi:waypoint x="505.00011908278657" y="29.05886046242398"></omgdi:waypoint>
+        <omgdi:waypoint x="522.1999648141916" y="30.000000148510797"></omgdi:waypoint>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge bpmnElement="sequenceFlow-bc91f164-1ee8-48e5-8afe-7fc15d0fb7ed" id="BPMNEdge_sequenceFlow-bc91f164-1ee8-48e5-8afe-7fc15d0fb7ed">
         <omgdi:waypoint x="29.949998618355412" y="110.0"></omgdi:waypoint>
@@ -60,6 +70,16 @@
       <bpmndi:BPMNEdge bpmnElement="sequenceFlow-943e5c4c-fcd5-406e-9345-f928cbe92710" id="BPMNEdge_sequenceFlow-943e5c4c-fcd5-406e-9345-f928cbe92710">
         <omgdi:waypoint x="569.9499999999977" y="187.56140350877192"></omgdi:waypoint>
         <omgdi:waypoint x="620.0005248012809" y="187.1223639291296"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="sid-26AFD2D7-A319-4116-BA25-062C3A313B1A" id="BPMNEdge_sid-26AFD2D7-A319-4116-BA25-062C3A313B1A">
+        <omgdi:waypoint x="744.9499803155664" y="27.00000019371509"></omgdi:waypoint>
+        <omgdi:waypoint x="767.49999037385" y="27.00000019371509"></omgdi:waypoint>
+        <omgdi:waypoint x="790.0440397415497" y="28.85312077669787"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="sid-1850CA14-2616-433D-A790-D58DD96939AE" id="BPMNEdge_sid-1850CA14-2616-433D-A790-D58DD96939AE">
+        <omgdi:waypoint x="603.1499734312298" y="28.409686205947022"></omgdi:waypoint>
+        <omgdi:waypoint x="639.0999816864731" y="27.00000019371509"></omgdi:waypoint>
+        <omgdi:waypoint x="674.9999798834328" y="27.00000019371509"></omgdi:waypoint>
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>
